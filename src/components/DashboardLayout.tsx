@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { LogOut, Plus, LayoutDashboard, Settings } from "lucide-react";
+import { LogOut, Plus, LayoutDashboard, Settings, Crown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
@@ -9,10 +9,12 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
 
   const isAdmin = userRole === "admin" || userRole === "super_admin";
+  const isSuperAdmin = userRole === "super_admin";
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     ...(isAdmin ? [{ path: "/admin", label: "Admin Panel", icon: Settings }] : []),
+    ...(isSuperAdmin ? [{ path: "/super-admin", label: "Super Admin", icon: Crown }] : []),
   ];
 
   return (
