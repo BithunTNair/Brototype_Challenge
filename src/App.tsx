@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
+import SuperAdmin from "./pages/SuperAdmin";
 import NewComplaint from "./pages/NewComplaint";
 import ComplaintDetail from "./pages/ComplaintDetail";
 import NotFound from "./pages/NotFound";
@@ -42,7 +43,15 @@ const App = () => (
               } 
             />
             <Route 
-              path="/complaint/new" 
+              path="/super-admin" 
+              element={
+                <ProtectedRoute requiredRole="super_admin">
+                  <SuperAdmin />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/complaint/new"
               element={
                 <ProtectedRoute>
                   <NewComplaint />
