@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { LogOut, Plus, LayoutDashboard, Settings, Crown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { signOut, user, userRole } = useAuth();
@@ -57,6 +58,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               <div className="text-sm text-muted-foreground hidden sm:block">
                 {user?.email}
               </div>
+              <ThemeToggle />
               <Button variant="outline" size="sm" onClick={signOut}>
                 <LogOut className="h-4 w-4" />
               </Button>
