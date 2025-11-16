@@ -11,6 +11,7 @@ import { PriorityBadge } from "@/components/PriorityBadge";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { ArrowLeft, MessageCircle, User } from "lucide-react";
+import { ChatInterface } from "@/components/ChatInterface";
 
 interface Complaint {
   id: string;
@@ -292,6 +293,8 @@ export default function ComplaintDetail() {
             )}
           </CardContent>
         </Card>
+
+        <ChatInterface complaintId={complaint.id} />
       </div>
     </DashboardLayout>
   );

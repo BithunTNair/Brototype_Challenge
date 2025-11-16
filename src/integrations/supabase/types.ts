@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      chat_messages: {
+        Row: {
+          complaint_id: string
+          created_at: string
+          id: string
+          message: string
+          read_at: string | null
+          user_id: string
+        }
+        Insert: {
+          complaint_id: string
+          created_at?: string
+          id?: string
+          message: string
+          read_at?: string | null
+          user_id: string
+        }
+        Update: {
+          complaint_id?: string
+          created_at?: string
+          id?: string
+          message?: string
+          read_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_complaint_id_fkey"
+            columns: ["complaint_id"]
+            isOneToOne: false
+            referencedRelation: "complaints"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       complaint_categories: {
         Row: {
           created_at: string | null
