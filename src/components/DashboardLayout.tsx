@@ -25,7 +25,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-8">
               <Link to="/dashboard" className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                SCMS
+                Bro VoiceBox
               </Link>
               <div className="hidden md:flex items-center space-x-2">
                 {navItems.map((item) => {
