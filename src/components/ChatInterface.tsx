@@ -132,13 +132,30 @@ export function ChatInterface({ complaintId }: ChatInterfaceProps) {
 
       setSending(true);
 
-      const { error } = await supabase.from("chat_messages").insert({
+      const { data, error } = await supabase.from("chat_messages").insert({
         complaint_id: complaintId,
         user_id: user.id,
         message: validated.message,
-      });
+      }).select("id, message, created_at, user_id").single();
 
       if (error) throw error;
+
+      // Optimistically add message to UI
+      if (data) {
+        const { data: profileData } = await supabase
+          .from("profiles")
+          .select("full_name")
+          .eq("id", user.id)
+          .single();
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            ...data,
+            profiles: profileData ? { full_name: profileData.full_name } : null,
+          },
+        ]);
+      }
 
       setNewMessage("");
     } catch (error: any) {
