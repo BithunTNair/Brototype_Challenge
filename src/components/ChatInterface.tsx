@@ -97,19 +97,30 @@ export function ChatInterface({ complaintId }: ChatInterfaceProps) {
         async (payload) => {
           const newMsg = payload.new as ChatMessage;
           
-          const { data: profileData } = await supabase
-            .from("profiles")
-            .select("full_name")
-            .eq("id", newMsg.user_id)
-            .single();
-
-          setMessages((prev) => [
-            ...prev,
-            {
-              ...newMsg,
-              profiles: profileData ? { full_name: profileData.full_name } : null,
-            },
-          ]);
+          // Prevent duplicates by checking if message already exists
+          setMessages((prev) => {
+            if (prev.some(msg => msg.id === newMsg.id)) {
+              return prev;
+            }
+            
+            // Fetch profile data for new message
+            supabase
+              .from("profiles")
+              .select("full_name")
+              .eq("id", newMsg.user_id)
+              .single()
+              .then(({ data: profileData }) => {
+                setMessages((current) => 
+                  current.map(msg => 
+                    msg.id === newMsg.id && !msg.profiles
+                      ? { ...msg, profiles: profileData ? { full_name: profileData.full_name } : null }
+                      : msg
+                  )
+                );
+              });
+            
+            return [...prev, { ...newMsg, profiles: null }];
+          });
         }
       )
       .subscribe();
