@@ -4,13 +4,29 @@ import { LogOut, Plus, LayoutDashboard, Settings, Crown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { signOut, user, userRole } = useAuth();
   const location = useLocation();
+  const [userName, setUserName] = useState<string>("");
 
   const isAdmin = userRole === "admin" || userRole === "super_admin";
   const isSuperAdmin = userRole === "super_admin";
+
+  useEffect(() => {
+    if (user?.id) {
+      supabase
+        .from("profiles")
+        .select("full_name")
+        .eq("id", user.id)
+        .single()
+        .then(({ data }) => {
+          if (data) setUserName(data.full_name);
+        });
+    }
+  }, [user?.id]);
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -56,7 +72,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 </Button>
               </Link>
               <div className="text-sm text-muted-foreground hidden sm:block">
-                {user?.email}
+                {userName || user?.email}
               </div>
               <ThemeToggle />
               <Button variant="outline" size="sm" onClick={signOut}>
