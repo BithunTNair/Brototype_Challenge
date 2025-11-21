@@ -65,12 +65,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Link to="/complaint/new">
-                <Button size="sm" className="gap-2">
-                  <Plus className="h-4 w-4" />
-                  <span className="hidden sm:inline">New Complaint</span>
-                </Button>
-              </Link>
+              {!isAdmin && (
+                <Link to="/complaint/new">
+                  <Button size="sm" className="gap-2">
+                    <Plus className="h-4 w-4" />
+                    <span className="hidden sm:inline">New Complaint</span>
+                  </Button>
+                </Link>
+              )}
               <div className="text-sm text-muted-foreground hidden sm:block">
                 {userName || user?.email}
               </div>

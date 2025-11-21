@@ -6,12 +6,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { StatusBadge } from "@/components/StatusBadge";
 import { PriorityBadge } from "@/components/PriorityBadge";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { formatDistance } from "date-fns";
-import { Search, FileText, Users } from "lucide-react";
+import { Search, FileText, Users, Trash2 } from "lucide-react";
 
 interface Complaint {
   id: string;
@@ -108,6 +119,23 @@ export default function Admin() {
       fetchAllComplaints();
     } catch (error: any) {
       toast.error("Failed to update status");
+      console.error(error);
+    }
+  };
+
+  const handleDeleteComplaint = async (complaintId: string) => {
+    try {
+      const { error } = await supabase
+        .from("complaints")
+        .delete()
+        .eq("id", complaintId);
+
+      if (error) throw error;
+
+      toast.success("Complaint deleted successfully");
+      fetchAllComplaints();
+    } catch (error: any) {
+      toast.error("Failed to delete complaint");
       console.error(error);
     }
   };
@@ -292,6 +320,31 @@ export default function Admin() {
                             View Details
                           </Button>
                         </Link>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="destructive" size="sm" className="w-full">
+                              <Trash2 className="h-4 w-4 mr-2" />
+                              Delete
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Delete Complaint</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to delete this complaint? This action cannot be undone and will remove all associated data.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => handleDeleteComplaint(complaint.id)}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </div>
                     </div>
                   </CardContent>
