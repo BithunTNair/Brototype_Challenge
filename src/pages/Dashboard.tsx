@@ -7,7 +7,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { PriorityBadge } from "@/components/PriorityBadge";
 import { Link } from "react-router-dom";
 import { formatDistance } from "date-fns";
-import { FileText, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { FileText, Clock, CheckCircle2, AlertCircle, Shield } from "lucide-react";
 import { toast } from "sonner";
 
 interface Complaint {
@@ -28,16 +28,21 @@ interface Stats {
 }
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, userRole } = useAuth();
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [stats, setStats] = useState<Stats>({ total: 0, pending: 0, resolved: 0, inProgress: 0 });
   const [loading, setLoading] = useState(true);
 
+  // Admins shouldn't see their complaints section
+  const isAdmin = userRole === "admin" || userRole === "super_admin";
+
   useEffect(() => {
-    if (user) {
+    if (user && !isAdmin) {
       fetchComplaints();
+    } else if (isAdmin) {
+      setLoading(false);
     }
-  }, [user]);
+  }, [user, isAdmin]);
 
   const fetchComplaints = async () => {
     try {
@@ -89,6 +94,32 @@ export default function Dashboard() {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
             <p className="mt-4 text-muted-foreground">Loading your complaints...</p>
           </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  // Show admin welcome message instead of complaints
+  if (isAdmin) {
+    return (
+      <DashboardLayout>
+        <div className="space-y-8">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
+            <p className="text-muted-foreground">
+              Welcome! Use the navigation menu to manage complaints and users.
+            </p>
+          </div>
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <Shield className="h-16 w-16 text-primary mb-4" />
+              <p className="text-lg font-medium mb-2">Administrator Access</p>
+              <p className="text-muted-foreground text-center max-w-md">
+                As an administrator, you can manage all user complaints through the Admin Panel. 
+                Navigate using the menu above to access admin features.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </DashboardLayout>
     );
