@@ -2,7 +2,10 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/13ab03fa-9adc-44aa-825b-1c6e439b4193
+Live Link : bro-voicebox.lovable.app
+
+**URL**: https://lovable.dev/projects/13ab03fa-9adc-44aa-825b-1c6e439b419
+
 
 🎙️ Bro VoiceBox
 
