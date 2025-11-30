@@ -4,51 +4,51 @@
 
 **URL**: https://lovable.dev/projects/13ab03fa-9adc-44aa-825b-1c6e439b4193
 
-## How can I edit this code?
+🎙️ Bro VoiceBox
 
-There are several ways of editing your application.
+A clean and secure web-based complaint management system for Brototype learners.
 
-**Use Lovable**
+🚀 Features
+👤 User Role (Students)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/13ab03fa-9adc-44aa-825b-1c6e439b4193) and start prompting.
+Sign Up / Log In
+Authenticate securely to access the platform.
 
-Changes made via Lovable will be committed automatically to this repo.
+Submit Complaints
+Add title, description, and priorities for your issue.
 
-**Use your preferred IDE**
+Track Complaint Status
+Watch complaint progress in real-time as the admin updates it.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Live Chat with Admin
+Each complaint includes a messaging section where users and admins can communicate directly for faster resolutions.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+View Complaint History
+Access previously submitted complaints anytime.
 
-Follow these steps:
+🛠️ Admin Role
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+View All Complaints
+Admins can see every complaint submitted by every user.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Update Complaint Status
+Change complaint progress such as:
+Submitted → In Review → In Progress → Resolved → Closed
 
-# Step 3: Install the necessary dependencies.
-npm i
+Assign and Manage Complaints
+Admin can take ownership and handle cases efficiently.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Live Chat with Users
+Communicate inside each complaint thread for clarification and updates.
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+🔒 Security & Authorization
 
-**Use GitHub Codespaces**
+Role-Based Access Control
+Only users can view their own complaints. Admins manage all.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Supabase Authentication & RLS
+Ensures data privacy and restricted access enforcement.
 
 ## What technologies are used for this project?
 
